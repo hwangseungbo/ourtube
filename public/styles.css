@@ -40,6 +40,30 @@ select {
   margin-bottom: 48px;
 }
 
+.site-logo {
+  display: block;
+  position: relative;
+  width: clamp(170px, 24vw, 230px);
+  aspect-ratio: 3.1 / 1;
+  margin-bottom: 44px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.site-logo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  transform: translateY(-34.6%);
+}
+
+.site-logo:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+}
+
 .eyebrow,
 .section-heading span,
 .uploader {
@@ -382,6 +406,9 @@ code {
   .shell {
     width: min(100% - 24px, 960px);
     padding-top: 42px;
+  }
+  .site-logo {
+    margin-bottom: 34px;
   }
   .url-row {
     grid-template-columns: 1fr;

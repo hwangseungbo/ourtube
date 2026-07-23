@@ -455,6 +455,11 @@ const staticFiles = new Map([
   ["/", ["index.html", "text/html; charset=utf-8"]],
   ["/app.js", ["app.js", "text/javascript; charset=utf-8"]],
   ["/styles.css", ["styles.css", "text/css; charset=utf-8"]],
+  ["/favicon.ico", ["favicon.ico", "image/x-icon"]],
+  ["/icons/favicon-32.png", ["icons/favicon-32.png", "image/png"]],
+  ["/icons/favicon-512.png", ["icons/favicon-512.png", "image/png"]],
+  ["/icons/apple-touch-icon.png", ["icons/apple-touch-icon.png", "image/png"]],
+  ["/icons/logo.png", ["icons/logo.png", "image/png"]],
   ["/botguard-runtime.html", ["botguard-runtime.html", "text/html; charset=utf-8"]],
   ["/botguard-runtime.js", ["botguard-runtime.js", "text/javascript; charset=utf-8"]],
 ]);
