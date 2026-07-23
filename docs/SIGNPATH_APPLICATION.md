@@ -21,12 +21,44 @@
 
 ## 영문 프로젝트 설명 초안
 
+### Tagline
+
+> A Windows desktop application for locally backing up videos that the user
+> owns or has permission to save.
+
+### Description
+
 > OurTube is an open-source Windows desktop application for backing up videos
 > that the user owns or has permission to save. Video discovery, download and
 > FFmpeg remuxing run on the user's PC. The application does not upload media
 > files to an OurTube server. It checks ourtube.kr for the current version and,
 > only after user approval, downloads updates from the project's public GitHub
 > Releases repository.
+
+### Reputation
+
+신청 시점의 실제 공개 지표를 다시 확인하고 숫자를 갱신합니다. 독립 보도나 대규모
+사용자가 없다면 이를 과장하지 않습니다.
+
+> OurTube is a newly released independent open-source project in public beta.
+> It does not yet have independent media coverage or a large established user
+> community. Its complete source, release artifacts, corresponding source
+> archives, code-signing policy and GitHub Actions build history are public for
+> verification:
+> https://github.com/hwangseungbo/ourtube,
+> https://github.com/hwangseungbo/ourtube-releases/releases/tag/v0.2.6,
+> https://ourtube.kr/code-signing, and
+> https://github.com/hwangseungbo/ourtube/actions/runs/29993576452.
+
+### 양식 선택값
+
+- Maintainer Type: `Individual maintainer(s)`
+- Build System: `GitHub Actions`
+- Company Name: 개인 프로젝트이므로 비워 둠
+- Primary Discovery Channel: `AI / LLM tools`
+- Exact source: `ChatGPT`
+- Wikipedia URL: 해당 문서가 없으므로 비워 둠
+- Email: `ghkdtmdqh@naver.com`
 
 ## 심사 시 반드시 공개할 내용
 
@@ -47,6 +79,9 @@
 - [ ] 홈페이지와 저장소의 코드 서명 정책 공개
 - [ ] 최신 공개 릴리스와 전체 대응 소스 제공
 - [ ] 프로젝트 기능과 네트워크 통신을 신청서에 사실대로 기재
+- [ ] 신청 시점의 GitHub·다운로드 지표로 Reputation 문구 갱신
+- [ ] 신청자 영문 First Name·Last Name 확인
+- [ ] 필수 동의 두 항목을 신청자가 직접 읽고 선택
 
 ## 승인 후 GitHub 설정
 
