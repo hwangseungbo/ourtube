@@ -14,6 +14,11 @@ contextBridge.exposeInMainWorld("ourtubeDesktop", {
     ipcRenderer.on("desktop:progress", listener);
     return () => ipcRenderer.removeListener("desktop:progress", listener);
   },
+  onUpdateStatus(callback) {
+    const listener = (_event, payload) => callback(payload);
+    ipcRenderer.on("desktop:update-status", listener);
+    return () => ipcRenderer.removeListener("desktop:update-status", listener);
+  },
   onOpenUrl(callback) {
     const listener = (_event, payload) => callback(payload);
     ipcRenderer.on("desktop:open-url", listener);

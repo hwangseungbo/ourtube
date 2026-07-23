@@ -230,6 +230,30 @@ api.onProgress((event) => {
   }
 });
 
+api.onUpdateStatus((event) => {
+  const percent = Math.min(100, Math.max(0, Number(event.percent) || 0));
+  if (event.state === "checking") {
+    engineVersion.textContent = "업데이트 확인 중…";
+    showMessage("업데이트 파일 정보를 안전하게 확인하는 중입니다.");
+  } else if (event.state === "starting") {
+    engineVersion.textContent = "업데이트 준비 중…";
+    showMessage("업데이트 다운로드를 준비하고 있습니다.");
+  } else if (event.state === "downloading") {
+    engineVersion.textContent = `업데이트 ${percent.toFixed(0)}%`;
+    const total = event.total ? ` / ${formatBytes(event.total)}` : "";
+    showMessage(`업데이트 다운로드 중 · ${formatBytes(event.transferred)}${total}`);
+  } else if (event.state === "downloaded") {
+    engineVersion.textContent = `v${event.version} 설치 준비 완료`;
+    showMessage("업데이트 다운로드와 무결성 검증이 완료되었습니다.", "success");
+  } else if (event.state === "installing") {
+    engineVersion.textContent = "업데이트 설치 중…";
+    showMessage("앱을 재시작해 업데이트를 설치합니다.", "success");
+  } else if (event.state === "error") {
+    engineVersion.textContent = "업데이트 다시 시도";
+    showMessage(event.message || "업데이트를 내려받지 못했습니다.", "error");
+  }
+});
+
 api.onOpenUrl(({ url }) => {
   if (!url) return;
   urlInput.value = url;

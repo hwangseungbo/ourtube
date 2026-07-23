@@ -42,7 +42,7 @@
           아워튜브(OurTube) 운영자(이하 “운영자”)는 웹사이트, Chrome 확장 프로그램과 Windows 앱을 제공하면서
           어떤 정보를 왜 처리하는지, 어디에 보관하는지 투명하게 안내합니다.
         </p>
-        <p class="effective-date">시행일: 2026년 7월 23일 · 버전 1.0</p>
+        <p class="effective-date">시행일: 2026년 7월 23일 · 버전 1.1</p>
 
         <section class="legal-section">
           <h2>1. 핵심 요약</h2>
@@ -99,9 +99,9 @@
                 </tr>
                 <tr>
                   <td>앱 업데이트 확인</td>
-                  <td>최신 버전 정보 요청에 수반되는 IP 주소, 기기·네트워크 정보와 접속 시각</td>
-                  <td>새 Windows 앱 버전 안내와 공식 다운로드 페이지 연결</td>
-                  <td>Cloudflare가 호스팅·보안 제공 과정에서 자체 정책에 따라 처리. 앱은 사용자 영상 주소나 파일 정보를 전송하지 않음</td>
+                  <td>버전 정보·업데이트 파일 요청에 수반되는 IP 주소, 사용자 에이전트, 요청 URL과 접속 시각</td>
+                  <td>새 Windows 앱 버전 안내, 사용자가 선택한 차등 업데이트 다운로드와 무결성 검증</td>
+                  <td>버전 확인은 Cloudflare, 사용자가 동의한 업데이트 다운로드는 GitHub가 각 서비스 제공 과정에서 자체 정책에 따라 처리. 영상 주소나 파일 정보는 전송하지 않음</td>
                 </tr>
                 <tr>
                   <td>웹 접속</td>
@@ -142,6 +142,15 @@
             영상 확인과 미디어 요청은 사용자의 브라우저 또는 Windows 앱에서 Google·YouTube 서비스로 직접 전송됩니다.
             해당 서비스의 정보 처리는 Google 및 YouTube의 정책이 적용됩니다. 운영자는 이 통신을 통해
             사용자의 Google 계정 비밀번호나 인증 정보를 수신하지 않습니다.
+          </p>
+          <h3>GitHub</h3>
+          <p>
+            Windows 앱 설치 파일을 배포하고, 사용자가 앱 안에서 업데이트 다운로드에 동의한 경우
+            차등 업데이트 파일을 제공하기 위해 GitHub, Inc.의 Releases 서비스를 사용합니다.
+            접속 과정의 기술 정보는
+            <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement"
+              target="_blank" rel="noreferrer">GitHub 개인정보처리방침</a>에 따라 처리될 수 있습니다.
+            영상 주소, 영상 정보와 완성 파일은 GitHub로 전송하지 않습니다.
           </p>
         </section>
 

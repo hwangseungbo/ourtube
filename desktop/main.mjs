@@ -5,6 +5,7 @@ import {
   ipcMain,
   shell,
 } from "electron";
+import electronUpdater from "electron-updater";
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import {
@@ -29,12 +30,14 @@ import {
   selectVideoFormats,
 } from "./core.mjs";
 
+const { autoUpdater } = electronUpdater;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 const rendererPath = path.join(__dirname, "index.html");
 const updateMetadataUrl = "https://ourtube.kr/app-version.json";
 const updateDownloadPageUrl = "https://ourtube.kr/desktop";
+const updateReleaseBaseUrl = "https://github.com/hwangseungbo/ourtube-releases/releases/download";
 const maxUpdateMetadataBytes = 16 * 1024;
 const allowedExternalUrls = new Set([
   "https://ourtube.kr/",
@@ -50,6 +53,9 @@ let activeJob = null;
 let lastCompletedPath = "";
 let pendingProtocolUrl = "";
 let activeUpdateCheck = null;
+let activeUpdateDownload = null;
+let downloadedUpdateVersion = "";
+let autoUpdaterConfigured = false;
 
 function getToolPaths() {
   if (app.isPackaged) {
@@ -134,6 +140,113 @@ async function fetchUpdateMetadata() {
   }
 }
 
+function sendUpdateStatus(payload) {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+  mainWindow.webContents.send("desktop:update-status", payload);
+}
+
+function configureAutoUpdater() {
+  if (!app.isPackaged) throw new Error("설치된 앱에서만 인앱 업데이트를 사용할 수 있습니다.");
+  if (autoUpdaterConfigured) return;
+
+  autoUpdater.autoDownload = false;
+  autoUpdater.autoInstallOnAppQuit = false;
+  autoUpdater.autoRunAppAfterInstall = true;
+  autoUpdater.allowPrerelease = false;
+  autoUpdater.disableDifferentialDownload = false;
+  autoUpdater.disableWebInstaller = true;
+  autoUpdater.previousBlockmapBaseUrlOverride =
+    `${updateReleaseBaseUrl}/v${app.getVersion()}`;
+
+  autoUpdater.on("download-progress", (progress) => {
+    sendUpdateStatus({
+      state: "downloading",
+      percent: Number(progress.percent) || 0,
+      transferred: Number(progress.transferred) || 0,
+      total: Number(progress.total) || 0,
+      bytesPerSecond: Number(progress.bytesPerSecond) || 0,
+    });
+  });
+  autoUpdater.on("update-downloaded", (info) => {
+    downloadedUpdateVersion = String(info.version || "");
+    sendUpdateStatus({
+      state: "downloaded",
+      version: downloadedUpdateVersion,
+    });
+  });
+  autoUpdater.on("error", (error) => {
+    sendUpdateStatus({
+      state: "error",
+      message: error?.message || "업데이트 다운로드 실패",
+    });
+  });
+
+  autoUpdaterConfigured = true;
+}
+
+async function offerDownloadedUpdate(version) {
+  const result = await dialog.showMessageBox(mainWindow, {
+    type: "info",
+    title: "아워튜브 업데이트",
+    message: `업데이트 ${version} 다운로드가 완료되었습니다.`,
+    detail: "지금 앱을 재시작하면 업데이트를 설치하고 아워튜브를 다시 실행합니다.",
+    buttons: ["지금 재시작하여 업데이트", "나중에"],
+    defaultId: 0,
+    cancelId: 1,
+    noLink: true,
+  });
+
+  if (result.response !== 0) {
+    return { status: "downloaded", version, installing: false };
+  }
+
+  sendUpdateStatus({ state: "installing", version });
+  setTimeout(() => autoUpdater.quitAndInstall(true, true), 150);
+  return { status: "installing", version, installing: true };
+}
+
+async function downloadAppUpdate(metadata) {
+  if (downloadedUpdateVersion === metadata.version) {
+    return offerDownloadedUpdate(metadata.version);
+  }
+  if (activeUpdateDownload) return activeUpdateDownload;
+
+  activeUpdateDownload = (async () => {
+    try {
+      configureAutoUpdater();
+      sendUpdateStatus({ state: "checking", version: metadata.version });
+
+      const result = await autoUpdater.checkForUpdates();
+      const availableVersion = String(result?.updateInfo?.version || "");
+      if (availableVersion !== metadata.version) {
+        throw new Error("업데이트 서버의 버전 정보가 서로 일치하지 않습니다.");
+      }
+
+      sendUpdateStatus({ state: "starting", version: metadata.version });
+      await autoUpdater.downloadUpdate();
+      downloadedUpdateVersion = metadata.version;
+      return offerDownloadedUpdate(metadata.version);
+    } catch (error) {
+      sendUpdateStatus({
+        state: "error",
+        message: error?.message || "업데이트 다운로드 실패",
+      });
+      await dialog.showMessageBox(mainWindow, {
+        type: "warning",
+        title: "아워튜브 업데이트",
+        message: "업데이트를 내려받지 못했습니다.",
+        detail: "인터넷 연결을 확인한 뒤 앱의 버전 버튼에서 다시 시도해 주세요.",
+        buttons: ["확인"],
+      });
+      return { status: "error", message: error?.message || "업데이트 다운로드 실패" };
+    } finally {
+      activeUpdateDownload = null;
+    }
+  })();
+
+  return activeUpdateDownload;
+}
+
 async function performUpdateCheck(interactive) {
   try {
     const metadata = await fetchUpdateMetadata();
@@ -158,18 +271,17 @@ async function performUpdateCheck(interactive) {
       type: "info",
       title: "아워튜브 업데이트",
       message: `새 버전 ${metadata.version}을 사용할 수 있습니다.`,
-      detail: `현재 버전 ${currentVersion}${notes}\n\n자동으로 설치하지 않습니다. 공식 다운로드 페이지를 열까요?`,
-      buttons: ["공식 다운로드 페이지 열기", "나중에"],
+      detail: `현재 버전 ${currentVersion}${notes}\n\n업데이트를 앱 안에서 내려받을까요? 필요한 변경 부분만 우선 다운로드합니다.`,
+      buttons: ["업데이트 다운로드", "나중에"],
       defaultId: 0,
       cancelId: 1,
       noLink: true,
     });
 
     if (result.response === 0) {
-      await shell.openExternal(updateDownloadPageUrl);
-      return { status: "available", version: metadata.version, opened: true };
+      return downloadAppUpdate(metadata);
     }
-    return { status: "available", version: metadata.version, opened: false };
+    return { status: "available", version: metadata.version, accepted: false };
   } catch (error) {
     if (interactive) {
       await dialog.showMessageBox(mainWindow, {
