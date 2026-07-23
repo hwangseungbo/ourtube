@@ -1,6 +1,6 @@
 const RELEASE_OWNER = "hwangseungbo";
 const RELEASE_REPOSITORY = "ourtube-releases";
-const FALLBACK_VERSION = "0.2.5";
+const FALLBACK_VERSION = "0.2.6";
 const BOT_PATTERN =
   /bot|crawler|spider|slurp|facebookexternalhit|kakaotalk-scrap|discordbot|twitterbot|preview/i;
 

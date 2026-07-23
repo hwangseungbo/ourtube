@@ -526,7 +526,7 @@ async function handleRequest(request, response) {
       );
       const version = /^\d+\.\d+\.\d+$/.test(versionPayload?.version)
         ? versionPayload.version
-        : "0.2.5";
+        : "0.2.6";
       response.writeHead(302, {
         "cache-control": "no-store",
         location: `https://github.com/hwangseungbo/ourtube-releases/releases/download/v${version}/OurTube-Setup-${version}.exe`,

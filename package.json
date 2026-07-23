@@ -1,6 +1,6 @@
 {
   "name": "ourtube",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "사용자 PC에서 영상 분석과 MP4 결합을 처리하는 아워튜브 Windows 데스크톱 앱",
   "author": "OurTube",
   "license": "GPL-3.0-or-later",

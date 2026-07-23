@@ -1,9 +1,10 @@
 {
-  "version": "0.2.5",
+  "version": "0.2.6",
   "downloadPage": "https://ourtube.kr/desktop",
-  "sha256": "DEA51E9C8A2FA22F3DF18500110B519B867B5B7B05632F1D98F3A73C601A6E75",
+  "sha256": "771B371D7CD1F0134B8379589C2F1EBB6E186FFBB54996A11146A284B2EA54D0",
   "releaseNotes": [
-    "인앱 차등 업데이트 실제 동작 검증",
-    "0.2.4 대비 변경 블록 약 1.04MB"
+    "아워튜브 자체 소스를 GPL-3.0-or-later로 공개",
+    "설치본에 FFmpeg·Electron·런타임 패키지 라이선스 고지 포함",
+    "내 영상과 저장 허가를 받은 영상의 백업 용도를 명확히 안내"
   ]
 }
