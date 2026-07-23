@@ -557,7 +557,13 @@ footer code {
 .app-hero h1 {
   max-width: 700px;
   margin: 20px 0 26px;
-  font-size: clamp(4rem, 7.5vw, 6.9rem);
+  font-size: clamp(3.6rem, 6vw, 5.6rem);
+  line-height: 1.03;
+}
+
+.app-hero h1 em {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .app-hero-lede {
@@ -1019,7 +1025,7 @@ footer code {
   }
 
   .app-hero h1 {
-    font-size: clamp(3.35rem, 16vw, 5rem);
+    font-size: clamp(2.7rem, 11.5vw, 3.7rem);
   }
 
   .app-hero-lede {
