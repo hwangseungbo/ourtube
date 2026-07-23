@@ -2,5 +2,6 @@ downloads/*
 !downloads/.gitkeep
 node_modules/
 .tmp/
+dist-desktop/
 .DS_Store
 Thumbs.db

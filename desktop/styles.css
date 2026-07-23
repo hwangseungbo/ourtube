@@ -1,0 +1,286 @@
+@import url("../public/styles.css");
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  min-width: 0;
+  min-height: 0;
+}
+
+.shell {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 14px 22px 12px;
+  display: grid;
+  grid-template-rows: 44px minmax(0, 1fr) 30px;
+  gap: 9px;
+  overflow: hidden;
+}
+
+.app-header {
+  min-width: 0;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: block;
+  width: 132px;
+  height: 42px;
+  margin: 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.desktop-badge {
+  padding: 7px 10px 6px;
+  border: 1px solid rgba(255, 73, 61, 0.28);
+  border-radius: 999px;
+  color: var(--accent);
+  background: rgba(255, 73, 61, 0.08);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.panel {
+  min-height: 0;
+  margin: 0;
+  padding: 18px 24px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-heading {
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.section-heading h2 {
+  font-size: 1.16rem;
+}
+
+.version {
+  margin-left: auto;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.version:hover,
+.version:focus-visible {
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--ink);
+}
+
+.version:focus-visible {
+  outline: 1px solid var(--red);
+}
+
+.version:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+form > label:first-child {
+  margin-bottom: 6px;
+  font-size: 0.76rem;
+}
+
+.url-row {
+  gap: 10px;
+}
+
+.url-row input {
+  min-height: 44px;
+  padding: 11px 14px;
+  font-size: 0.84rem;
+}
+
+.url-row button {
+  min-height: 44px;
+  padding: 0 20px;
+}
+
+.engine-status {
+  margin: 7px 0 0;
+  font-size: 0.7rem;
+}
+
+.message {
+  min-height: 18px;
+  margin: 7px 0 0;
+  font-size: 0.77rem;
+  line-height: 1.4;
+}
+
+.preview {
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 17px;
+  margin-top: 9px;
+  padding-top: 9px;
+}
+
+.preview img {
+  width: 176px;
+  min-width: 176px;
+  border-radius: 10px;
+}
+
+.preview-copy {
+  min-width: 0;
+}
+
+.preview h3 {
+  margin: 3px 0 5px;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 1.18rem;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.uploader {
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.duration {
+  margin-top: 5px;
+  font-size: 0.78rem;
+}
+
+.download-controls {
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.option-groups {
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: 9px;
+}
+
+.client-format,
+.quality-picker {
+  white-space: nowrap;
+  font-size: 0.73rem;
+}
+
+.client-format {
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.quality-picker select {
+  min-height: 38px;
+  max-width: 245px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.primary {
+  min-height: 40px;
+  padding: 0 18px;
+  white-space: nowrap;
+}
+
+.progress-card {
+  margin-top: 9px;
+  padding: 10px 13px;
+  border-radius: 12px;
+}
+
+.progress-labels {
+  margin-bottom: 6px;
+}
+
+.progress-track {
+  height: 6px;
+}
+
+.download-summary {
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  font-size: 0.66rem;
+}
+
+.download-summary span + span::before {
+  display: none;
+}
+
+#output-path {
+  margin: 6px 0 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.66rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cancel-button {
+  min-height: 31px;
+  margin-top: 6px;
+  padding: 0 12px;
+}
+
+footer {
+  height: 30px;
+  margin: 0;
+  padding: 0 3px;
+  align-items: center;
+}
+
+footer > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.66rem;
+  white-space: nowrap;
+}
+
+footer nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 9px;
+}
+
+footer nav a {
+  font-size: 0.66rem;
+  white-space: nowrap;
+}
+
+.folder-button {
+  min-height: 29px;
+  padding: 0 11px;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}

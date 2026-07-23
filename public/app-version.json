@@ -1,0 +1,11 @@
+{
+  "version": "0.2.2",
+  "downloadPage": "https://ourtube.kr/desktop",
+  "sha256": "5BDC624D7D20225BADF151D9A199894853AF80AEFA17FDC6C238AA2A032BCB7C",
+  "releaseNotes": [
+    "고정 크기와 무스크롤 데스크톱 화면",
+    "권한 확인 체크 절차 제거",
+    "영상 전용 스트림과 최고 품질 M4A 음성 우선 결합",
+    "사용자가 선택하는 안전한 수동 업데이트 확인"
+  ]
+}

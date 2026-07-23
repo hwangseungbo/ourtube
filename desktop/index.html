@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>아워튜브 · Windows 데스크톱</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./renderer.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="app-header">
+        <img class="logo" src="../public/icons/logo.png" alt="아워튜브" />
+        <span class="desktop-badge">WINDOWS APP · LOCAL PROCESSING</span>
+      </header>
+
+      <section class="panel" aria-labelledby="download-title">
+        <div class="section-heading">
+          <span>01</span>
+          <h2 id="download-title">영상 내려받기</h2>
+          <button
+            id="engine-version"
+            class="version"
+            type="button"
+            title="새 버전 확인"
+          ></button>
+        </div>
+
+        <form id="inspect-form">
+          <label for="video-url">YouTube URL</label>
+          <div class="url-row">
+            <input
+              id="video-url"
+              name="url"
+              type="url"
+              inputmode="url"
+              autocomplete="off"
+              placeholder="https://www.youtube.com/watch?v=..."
+              required
+            />
+            <button id="inspect-button" type="submit">영상 확인</button>
+          </div>
+
+          <p id="engine-status" class="engine-status">로컬 엔진을 확인하는 중입니다…</p>
+        </form>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+
+        <article id="preview" class="preview" hidden>
+          <img id="thumbnail" alt="영상 미리보기" referrerpolicy="no-referrer" />
+          <div class="preview-copy">
+            <span id="uploader" class="uploader"></span>
+            <h3 id="video-title"></h3>
+            <span id="duration" class="duration"></span>
+          </div>
+        </article>
+
+        <div id="download-controls" class="download-controls" hidden>
+          <div class="option-groups">
+            <span class="client-format">MP4 영상 · 이 PC에서 결합</span>
+            <label class="quality-picker" for="video-quality">
+              <span>영상 화질</span>
+              <select id="video-quality"></select>
+            </label>
+          </div>
+          <button id="download-button" class="primary" type="button">저장 위치 선택 후 다운로드</button>
+        </div>
+
+        <div id="progress-card" class="progress-card" hidden>
+          <div class="progress-labels">
+            <strong id="progress-state">준비 중</strong>
+            <span id="progress-detail">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+          <div class="download-summary">
+            <span id="format-summary">—</span>
+            <span id="size-summary">—</span>
+            <span id="speed-summary">—</span>
+          </div>
+          <p id="output-path"></p>
+          <button id="cancel-button" class="cancel-button" type="button" hidden>다운로드 취소</button>
+        </div>
+      </section>
+
+      <footer>
+        <div>
+          <p>영상 데이터는 아워튜브 서버를 거치지 않습니다.</p>
+          <nav aria-label="정책 및 문의">
+            <a href="https://ourtube.kr/privacy" target="_blank" rel="noreferrer">개인정보 처리방침</a>
+            <a href="https://ourtube.kr/terms" target="_blank" rel="noreferrer">이용약관</a>
+            <a href="https://ourtube.kr/support" target="_blank" rel="noreferrer">문의</a>
+          </nav>
+        </div>
+        <button id="open-folder-button" class="folder-button" type="button" disabled>저장 폴더 열기</button>
+      </footer>
+    </main>
+  </body>
+</html>
