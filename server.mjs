@@ -513,6 +513,25 @@ async function handleRequest(request, response) {
   cleanupJobs();
 
   try {
+    if (
+      (request.method === "GET" || request.method === "HEAD")
+      && url.pathname === "/download/windows"
+    ) {
+      const versionPayload = JSON.parse(
+        await readFile(join(publicDirectory, "app-version.json"), "utf8"),
+      );
+      const version = /^\d+\.\d+\.\d+$/.test(versionPayload?.version)
+        ? versionPayload.version
+        : "0.2.5";
+      response.writeHead(302, {
+        "cache-control": "no-store",
+        location: `https://github.com/hwangseungbo/ourtube-releases/releases/download/v${version}/OurTube-Setup-${version}.exe`,
+        "x-robots-tag": "noindex, nofollow",
+      });
+      response.end();
+      return;
+    }
+
     if (request.method === "GET" && url.pathname === "/api/health") {
       const [ytDlp, ffmpeg] = await Promise.all([
         checkDependency("yt-dlp", ["--version"]),
