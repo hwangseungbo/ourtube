@@ -1,0 +1,152 @@
+name: Windows build
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      submit_to_signpath:
+        description: Submit the unsigned installer to SignPath after an approved project is configured
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: windows-build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate source
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Verify release metadata
+        run: npm run release:verify
+
+      - name: Run source and license checks
+        run: npm run check
+
+      - name: Run tests
+        run: npm test
+
+  build:
+    name: Build unsigned Windows installer
+    needs: validate
+    runs-on: windows-latest
+    timeout-minutes: 35
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build unsigned installer
+        run: npm run desktop:dist
+
+      - name: Verify installer and write build metadata
+        id: build-metadata
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          $installer = Get-Item -LiteralPath "dist-desktop/OurTube-Setup-$version.exe"
+          $sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $installer.FullName).Hash
+          $signature = Get-AuthenticodeSignature -LiteralPath $installer.FullName
+          if ($signature.Status -ne "NotSigned") {
+            throw "The pre-SignPath build must be unsigned, found $($signature.Status)."
+          }
+
+          $metadata = [ordered]@{
+            version = $version
+            commit = "${{ github.sha }}"
+            workflowRun = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            installer = $installer.Name
+            size = $installer.Length
+            sha256 = $sha256
+            signatureStatus = $signature.Status.ToString()
+          }
+          $metadata | ConvertTo-Json | Set-Content -Encoding utf8 "dist-desktop/build-metadata.json"
+          "$sha256  $($installer.Name)" | Set-Content -Encoding ascii "dist-desktop/SHA256SUMS.txt"
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Upload unsigned installer for origin verification
+        id: upload-unsigned-installer
+        uses: actions/upload-artifact@v7
+        with:
+          name: ourtube-unsigned-${{ steps.build-metadata.outputs.version }}
+          path: dist-desktop/OurTube-Setup-${{ steps.build-metadata.outputs.version }}.exe
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload unsigned build metadata
+        uses: actions/upload-artifact@v7
+        with:
+          name: ourtube-build-metadata-${{ steps.build-metadata.outputs.version }}
+          path: |
+            dist-desktop/latest.yml
+            dist-desktop/OurTube-Setup-${{ steps.build-metadata.outputs.version }}.exe.blockmap
+            dist-desktop/SHA256SUMS.txt
+            dist-desktop/build-metadata.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Submit approved manual build to SignPath
+        if: >-
+          ${{ github.event_name == 'workflow_dispatch'
+              && inputs.submit_to_signpath
+              && vars.SIGNPATH_ENABLED == 'true' }}
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          github-artifact-id: ${{ steps.upload-unsigned-installer.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: ${{ github.workspace }}\dist-signed
+          parameters: |
+            version: "${{ steps.build-metadata.outputs.version }}"
+
+      - name: Upload signed installer
+        if: >-
+          ${{ github.event_name == 'workflow_dispatch'
+              && inputs.submit_to_signpath
+              && vars.SIGNPATH_ENABLED == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: ourtube-signed-${{ steps.build-metadata.outputs.version }}
+          path: dist-signed/**
+          if-no-files-found: error
+          retention-days: 30

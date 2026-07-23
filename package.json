@@ -28,6 +28,7 @@
     "desktop:dir": "npm run desktop:check && npm run licenses:prepare && electron-builder --win --dir",
     "desktop:dist": "npm run desktop:check && npm run licenses:prepare && electron-builder --win nsis",
     "build:extension": "node scripts/build-extension.mjs",
+    "release:verify": "node scripts/verify-release.mjs",
     "check": "npm run build:extension && npm run licenses:audit && node --check server.mjs && node --check public/app.js && node --check extension/service-worker.js && node --check extension/web-bridge.js && node --check extension/youtube-main.js && node --check extension/youtube-bridge.js && node --check extension/popup.js && node --check extension/src/remux.js && node --check extension/src/download-entry.js && node --check extension/src/offscreen-entry.js && node --check extension/src/direct-extractor.js && node --check extension/src/onesie.js && node --check extension/src/sandbox-client.js && node --check extension/src/sandbox-entry.js",
     "test": "node --test tests/extension-probe.test.mjs tests/desktop-core.test.mjs"
   },
