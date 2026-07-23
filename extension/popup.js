@@ -125,7 +125,7 @@ runButton.addEventListener("click", async () => {
   } catch (error) {
     const message = error instanceof Error ? error.message : "테스트에 실패했습니다.";
     const localHint = message.includes("Failed to fetch")
-      ? " 로컬 위튜브 서버가 실행 중인지 확인해 주세요."
+      ? " 로컬 아워튜브 서버가 실행 중인지 확인해 주세요."
       : "";
     setStatus(`${message}${localHint}`, "error");
   } finally {

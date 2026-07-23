@@ -187,6 +187,26 @@ button:disabled {
   color: var(--green);
 }
 
+.privacy-notice {
+  margin: 4px 0 16px;
+  color: #777975;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.privacy-notice a,
+.policy-links a {
+  color: var(--muted);
+  text-underline-offset: 3px;
+}
+
+.privacy-notice a:hover,
+.privacy-notice a:focus-visible,
+.policy-links a:hover,
+.policy-links a:focus-visible {
+  color: var(--ink);
+}
+
 .confirmation input {
   margin-top: 3px;
   accent-color: var(--red);
@@ -390,8 +410,26 @@ footer {
   color: #727370;
   font-size: 0.78rem;
 }
-code {
+footer code {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
   color: var(--muted);
+}
+.footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+}
+.policy-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.policy-links a {
+  font-size: 0.72rem;
 }
 .folder-button {
   min-height: 38px;
@@ -435,6 +473,18 @@ code {
   }
   footer {
     flex-direction: column;
-    gap: 0;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .footer-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .policy-links {
+    justify-content: space-between;
+  }
+  .folder-button {
+    width: 100%;
   }
 }

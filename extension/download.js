@@ -60772,7 +60772,7 @@ function parseOnesieResponse(buffer) {
     } else if (part.type === UMPPartId.SABR_ERROR) {
       const error2 = SabrError.decode(data);
       sabrErrors.push(error2);
-      console.warn("[WeTube SABR]", error2);
+      console.warn("[OurTube SABR]", error2);
     }
   });
   return {
@@ -60822,7 +60822,7 @@ async function getOnesiePlayerResponse({ clientConfig, context, player, videoId 
   const redirectorUrl = await getRedirectorUrl();
   const origin = redirectorUrl.split("/initplayback")[0];
   const requestUrl = `${origin}${clientConfig.baseUrl}&id=${encodedVideoId}&cmo:sensitive_content=yes&opr=1&osts=0&por=1&rn=0`;
-  console.debug("[WeTube Onesie]", {
+  console.debug("[OurTube Onesie]", {
     host: new URL(requestUrl).host,
     requestBytes: body.byteLength
   });
@@ -60833,7 +60833,7 @@ async function getOnesiePlayerResponse({ clientConfig, context, player, videoId 
   const parsedResponse = parseOnesieResponse(responseBytes.buffer);
   const { playerHeader } = parsedResponse;
   if (!playerHeader?.cryptoParams || !playerHeader.data) {
-    console.warn("[WeTube Onesie] \uD50C\uB808\uC774\uC5B4 \uC751\uB2F5 \uC9C4\uB2E8", parsedResponse.headerDetails);
+    console.warn("[OurTube Onesie] \uD50C\uB808\uC774\uC5B4 \uC751\uB2F5 \uC9C4\uB2E8", parsedResponse.headerDetails);
     const sabrSummary = parsedResponse.sabrErrors.map((error2) => `${error2.type || "unknown"}/${error2.code || 0}`).join(",") || "none";
     const partialSummary = parsedResponse.partialPart ? `${parsedResponse.partialPart.type}:${parsedResponse.partialPart.size}` : "none";
     throw new Error(
@@ -61364,7 +61364,7 @@ function formatBytes(bytes2) {
 }
 function sanitizeFilename(value) {
   const safe = value.replace(/[<>:"/\\|?*\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 150);
-  return `${safe || "\uC704\uD29C\uBE0C \uC601\uC0C1"}.mp4`;
+  return `${safe || "\uC544\uC6CC\uD29C\uBE0C \uC601\uC0C1"}.mp4`;
 }
 function getStream(kind) {
   return preparedDownload?.streams.find((stream) => stream.kind === kind) || null;

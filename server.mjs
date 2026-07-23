@@ -455,6 +455,13 @@ const staticFiles = new Map([
   ["/", ["index.html", "text/html; charset=utf-8"]],
   ["/app.js", ["app.js", "text/javascript; charset=utf-8"]],
   ["/styles.css", ["styles.css", "text/css; charset=utf-8"]],
+  ["/legal.css", ["legal.css", "text/css; charset=utf-8"]],
+  ["/privacy", ["privacy.html", "text/html; charset=utf-8"]],
+  ["/privacy.html", ["privacy.html", "text/html; charset=utf-8"]],
+  ["/terms", ["terms.html", "text/html; charset=utf-8"]],
+  ["/terms.html", ["terms.html", "text/html; charset=utf-8"]],
+  ["/support", ["support.html", "text/html; charset=utf-8"]],
+  ["/support.html", ["support.html", "text/html; charset=utf-8"]],
   ["/favicon.ico", ["favicon.ico", "image/x-icon"]],
   ["/icons/favicon-32.png", ["icons/favicon-32.png", "image/png"]],
   ["/icons/favicon-512.png", ["icons/favicon-512.png", "image/png"]],
@@ -595,7 +602,7 @@ const server = createServer((request, response) => {
 
 server.on("error", (error) => {
   if (error.code === "EADDRINUSE") {
-    console.error(`${PORT} 포트를 이미 사용 중입니다. 기존 위튜브 서버를 먼저 종료해 주세요.`);
+    console.error(`${PORT} 포트를 이미 사용 중입니다. 기존 아워튜브 서버를 먼저 종료해 주세요.`);
   } else {
     console.error(error);
   }
@@ -603,5 +610,5 @@ server.on("error", (error) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`위튜브가 http://${HOST}:${PORT} 에서 실행 중입니다.`);
+  console.log(`아워튜브가 http://${HOST}:${PORT} 에서 실행 중입니다.`);
 });

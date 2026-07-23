@@ -849,7 +849,7 @@ async function saveOffscreenFile({ jobId, url, filename }, sender) {
   if (!await getJobRoute(String(jobId || ""))) throw new Error("저장할 다운로드 작업을 찾지 못했습니다.");
   const downloadId = await chrome.downloads.download({
     url,
-    filename: String(filename || "위튜브 영상.mp4"),
+    filename: String(filename || "아워튜브 영상.mp4"),
     conflictAction: "uniquify",
     saveAs: false,
   });

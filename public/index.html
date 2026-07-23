@@ -8,15 +8,30 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/icons/favicon-512.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <meta name="description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하는 도구" />
-    <title>위튜브 · 내 PC에서 영상 저장</title>
+    <link rel="canonical" href="https://ourtube.kr/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="아워튜브" />
+    <meta property="og:title" content="아워튜브 · 내 PC에서 영상 저장" />
+    <meta property="og:description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하세요." />
+    <meta property="og:url" content="https://ourtube.kr/" />
+    <meta property="og:image" content="https://ourtube.kr/icons/logo.png" />
+    <meta property="og:image:width" content="1254" />
+    <meta property="og:image:height" content="1254" />
+    <meta property="og:image:alt" content="아워튜브 로고" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="아워튜브 · 내 PC에서 영상 저장" />
+    <meta name="twitter:description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하세요." />
+    <meta name="twitter:image" content="https://ourtube.kr/icons/logo.png" />
+    <title>아워튜브 · 내 PC에서 영상 저장</title>
     <link rel="stylesheet" href="/styles.css" />
     <script src="/app.js" defer></script>
   </head>
   <body>
     <main class="shell">
       <header class="hero">
-        <a class="site-logo" href="/" aria-label="OurTube 홈">
-          <img src="/icons/logo.png" alt="OurTube" width="1254" height="1254" />
+        <a class="site-logo" href="/" aria-label="아워튜브 홈">
+          <img src="/icons/logo.png" alt="아워튜브" width="1254" height="1254" />
         </a>
         <span class="eyebrow">OURTUBE.KR · CLIENT-SIDE</span>
         <h1>필요한 영상만,<br /><em>내 컴퓨터에.</em></h1>
@@ -34,10 +49,14 @@
           <div class="url-row">
             <input id="video-url" name="url" type="url" inputmode="url" autocomplete="off"
               placeholder="https://www.youtube.com/watch?v=..." required />
-            <button id="inspect-button" type="submit">새 탭 없이 영상 분석</button>
+            <button id="inspect-button" type="submit">영상 내려받기</button>
           </div>
 
           <p id="extension-status" class="extension-status">확장 프로그램 연결을 확인하는 중입니다…</p>
+          <p class="privacy-notice">
+            확장 프로그램은 요청한 YouTube 주소와 미디어 정보를 사용자 PC에서만 처리합니다.
+            <a href="/privacy">개인정보 처리방침 보기</a>
+          </p>
 
           <label class="confirmation">
             <input id="rights-confirmed" type="checkbox" required />
@@ -89,8 +108,15 @@
 
       <footer>
         <p>저장 위치 <code>Chrome 다운로드 폴더</code></p>
-        <button id="open-folder-button" class="folder-button"
-          type="button">다운로드 폴더 열기</button>
+        <div class="footer-actions">
+          <nav class="policy-links" aria-label="정책 및 문의">
+            <a href="/privacy">개인정보 처리방침</a>
+            <a href="/terms">이용약관</a>
+            <a href="/support">문의</a>
+          </nav>
+          <button id="open-folder-button" class="folder-button"
+            type="button">다운로드 폴더 열기</button>
+        </div>
       </footer>
     </main>
   </body>

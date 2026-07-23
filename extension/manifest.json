@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "위튜브 클라이언트 다운로더",
-  "version": "0.9.0",
+  "name": "아워튜브 클라이언트 다운로더",
+  "version": "0.9.1",
   "minimum_chrome_version": "116",
   "description": "사용자 Chrome에서 YouTube 미디어를 받아 로컬 MP4로 결합합니다.",
   "permissions": [
@@ -27,7 +27,7 @@
     "type": "module"
   },
   "action": {
-    "default_title": "위튜브 클라이언트 다운로더",
+    "default_title": "아워튜브 클라이언트 다운로더",
     "default_popup": "popup.html"
   },
   "content_scripts": [

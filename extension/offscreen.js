@@ -60203,7 +60203,7 @@ function formatBytes(bytes2) {
 }
 function sanitizeFilename(value) {
   const safe = String(value || "").replace(/[<>:"/\\|?*\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 150);
-  return `${safe || "\uC704\uD29C\uBE0C \uC601\uC0C1"}.mp4`;
+  return `${safe || "\uC544\uC6CC\uD29C\uBE0C \uC601\uC0C1"}.mp4`;
 }
 function getStream(prepared, kind) {
   return prepared?.streams?.find((stream) => stream.kind === kind) || null;

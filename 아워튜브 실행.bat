@@ -1,11 +1,11 @@
 @echo off
-title WeTube Local Server
+title OurTube Local Server
 cd /d "%~dp0"
 
 where node.exe >nul 2>&1
 if errorlevel 1 goto missing_node
 
-echo Starting WeTube at http://127.0.0.1:4545
+echo Starting OurTube at http://127.0.0.1:4545
 echo Press Ctrl+C to stop the server.
 echo.
 

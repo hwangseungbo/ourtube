@@ -211,7 +211,7 @@ function parseOnesieResponse(buffer) {
     } else if (part.type === UMPPartId.SABR_ERROR) {
       const error = SabrError.decode(data);
       sabrErrors.push(error);
-      console.warn("[WeTube SABR]", error);
+      console.warn("[OurTube SABR]", error);
     }
   });
   return {
@@ -264,7 +264,7 @@ export async function getOnesiePlayerResponse({ clientConfig, context, player, v
   const redirectorUrl = await getRedirectorUrl();
   const origin = redirectorUrl.split("/initplayback")[0];
   const requestUrl = `${origin}${clientConfig.baseUrl}&id=${encodedVideoId}&cmo:sensitive_content=yes&opr=1&osts=0&por=1&rn=0`;
-  console.debug("[WeTube Onesie]", {
+  console.debug("[OurTube Onesie]", {
     host: new URL(requestUrl).host,
     requestBytes: body.byteLength,
   });
@@ -276,7 +276,7 @@ export async function getOnesiePlayerResponse({ clientConfig, context, player, v
 
   const { playerHeader } = parsedResponse;
   if (!playerHeader?.cryptoParams || !playerHeader.data) {
-    console.warn("[WeTube Onesie] 플레이어 응답 진단", parsedResponse.headerDetails);
+    console.warn("[OurTube Onesie] 플레이어 응답 진단", parsedResponse.headerDetails);
     const sabrSummary = parsedResponse.sabrErrors
       .map((error) => `${error.type || "unknown"}/${error.code || 0}`)
       .join(",") || "none";

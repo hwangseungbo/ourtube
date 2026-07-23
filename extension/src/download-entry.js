@@ -84,7 +84,7 @@ function sanitizeFilename(value) {
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 150);
-  return `${safe || "위튜브 영상"}.mp4`;
+  return `${safe || "아워튜브 영상"}.mp4`;
 }
 
 function getStream(kind) {

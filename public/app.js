@@ -164,7 +164,7 @@ function handleJobEvent(event) {
   downloadButton.disabled = running || ["completed", "failed", "canceled"].includes(event.state);
 
   if (["ready", "failed", "canceled"].includes(event.state)) {
-    setBusy(inspectButton, false, "새 탭 없이 분석 중…", "새 탭 없이 영상 분석");
+    setBusy(inspectButton, false, "영상 확인 중…", "영상 내려받기");
   }
 
   if (event.state === "completed") {
@@ -182,7 +182,7 @@ window.addEventListener("message", (event) => {
   if (event.source !== window || event.origin !== location.origin || event.data?.channel !== "wetube-extension") return;
   if (event.data.type === "READY") {
     extensionReady = true;
-    extensionStatus.textContent = "확장 프로그램 연결됨 · 새 탭 없이 이 화면에서 다운로드합니다.";
+    extensionStatus.textContent = "확장 프로그램 연결됨 · 이 화면에서 다운로드할 수 있습니다.";
     extensionStatus.classList.add("ready");
     return;
   }
@@ -213,7 +213,7 @@ inspectForm.addEventListener("submit", async (event) => {
   }
 
   resetDownloadView();
-  setBusy(inspectButton, true, "새 탭 없이 분석 중…", "새 탭 없이 영상 분석");
+  setBusy(inspectButton, true, "영상 확인 중…", "영상 내려받기");
   showMessage("숨겨진 확장 프로그램 엔진에서 영상 정보를 분석하고 있습니다…");
   let queued = false;
   try {
@@ -233,7 +233,7 @@ inspectForm.addEventListener("submit", async (event) => {
     showMessage(error.message, "error");
     progressState.textContent = "영상 분석 실패";
   } finally {
-    if (!queued) setBusy(inspectButton, false, "새 탭 없이 분석 중…", "새 탭 없이 영상 분석");
+    if (!queued) setBusy(inspectButton, false, "영상 확인 중…", "영상 내려받기");
   }
 });
 
