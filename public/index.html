@@ -7,118 +7,171 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icons/favicon-512.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-    <meta name="description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하는 도구" />
+    <meta
+      name="description"
+      content="아워튜브 Windows 앱으로 허락받은 YouTube 영상을 내 PC에서 확인하고 MP4로 저장하세요."
+    />
     <link rel="canonical" href="https://ourtube.kr/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:site_name" content="아워튜브" />
-    <meta property="og:title" content="아워튜브 · 내 PC에서 영상 저장" />
-    <meta property="og:description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하세요." />
+    <meta property="og:title" content="아워튜브 · 영상 저장은 앱에서 간단하게" />
+    <meta
+      property="og:description"
+      content="URL을 붙여넣고 화질과 저장 위치를 선택하세요. 다운로드와 MP4 결합은 내 PC에서 처리됩니다."
+    />
     <meta property="og:url" content="https://ourtube.kr/" />
-    <meta property="og:image" content="https://ourtube.kr/icons/logo.png" />
-    <meta property="og:image:width" content="1254" />
-    <meta property="og:image:height" content="1254" />
-    <meta property="og:image:alt" content="아워튜브 로고" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="아워튜브 · 내 PC에서 영상 저장" />
-    <meta name="twitter:description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하세요." />
-    <meta name="twitter:image" content="https://ourtube.kr/icons/logo.png" />
-    <title>아워튜브 · 내 PC에서 영상 저장</title>
+    <meta property="og:image" content="https://ourtube.kr/og.png" />
+    <meta property="og:image:width" content="1732" />
+    <meta property="og:image:height" content="908" />
+    <meta property="og:image:alt" content="아워튜브 Windows 앱 소개" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="아워튜브 · 영상 저장은 앱에서 간단하게" />
+    <meta
+      name="twitter:description"
+      content="URL을 붙여넣고 화질과 저장 위치를 선택하세요. 다운로드와 MP4 결합은 내 PC에서 처리됩니다."
+    />
+    <meta name="twitter:image" content="https://ourtube.kr/og.png" />
+    <title>아워튜브 · Windows 앱</title>
     <link rel="stylesheet" href="/styles.css" />
-    <script src="/app.js" defer></script>
   </head>
-  <body>
-    <main class="shell">
-      <header class="hero">
-        <a class="site-logo" href="/" aria-label="아워튜브 홈">
+  <body class="landing-page">
+    <div class="landing-shell">
+      <header class="landing-topbar">
+        <a class="site-logo landing-logo" href="/" aria-label="아워튜브 홈">
           <img src="/icons/logo.png" alt="아워튜브" width="1254" height="1254" />
         </a>
-        <span class="eyebrow">OURTUBE.KR · CLIENT-SIDE</span>
-        <h1>필요한 영상만,<br /><em>내 컴퓨터에.</em></h1>
-        <p>본인이 제작했거나 저장 허락을 받은 YouTube 영상을 사용자 PC에서 MP4로 저장합니다.</p>
+        <nav class="landing-nav" aria-label="주요 메뉴">
+          <a href="/desktop">Windows 앱</a>
+          <a href="/support">도움말</a>
+          <a href="/privacy">개인정보 처리방침</a>
+        </nav>
       </header>
 
-      <section class="panel" aria-labelledby="download-title">
-        <div class="section-heading">
-          <span>01</span>
-          <h2 id="download-title">영상 링크</h2>
-        </div>
+      <main>
+        <section class="app-hero">
+          <div class="app-hero-copy">
+            <p class="eyebrow">WINDOWS APP · LOCAL PROCESSING</p>
+            <h1>영상 저장은,<br /><em>앱에서 간단하게.</em></h1>
+            <p class="app-hero-lede">
+              YouTube 주소를 붙여넣고 화질과 저장 위치만 선택하세요.
+              영상 확인부터 MP4 결합까지 아워튜브가 내 컴퓨터에서 처리합니다.
+            </p>
 
-        <form id="inspect-form">
-          <label for="video-url">YouTube URL</label>
-          <div class="url-row">
-            <input id="video-url" name="url" type="url" inputmode="url" autocomplete="off"
-              placeholder="https://www.youtube.com/watch?v=..." required />
-            <button id="inspect-button" type="submit">영상 내려받기</button>
+            <div class="hero-actions">
+              <a class="hero-button hero-button-primary" href="/desktop">Windows 앱 다운로드</a>
+              <a class="hero-button hero-button-secondary" href="ourtube://open">설치된 앱 열기</a>
+            </div>
+
+            <div class="hero-meta" aria-label="지원 정보">
+              <span>Windows 10·11</span>
+              <span>현재 버전 0.2.5</span>
+              <span>앱 내 자동 업데이트</span>
+            </div>
           </div>
 
-          <p id="extension-status" class="extension-status">확장 프로그램 연결을 확인하는 중입니다…</p>
-          <p class="privacy-notice">
-            확장 프로그램은 요청한 YouTube 주소와 미디어 정보를 사용자 PC에서만 처리합니다.
-            <a href="/privacy">개인정보 처리방침 보기</a>
-          </p>
-
-          <label class="confirmation">
-            <input id="rights-confirmed" type="checkbox" required />
-            <span>이 영상을 저장할 권한이 있거나, 이용 허락·공개 라이선스를 확인했습니다.</span>
-          </label>
-        </form>
-
-        <div id="message" class="message" role="status" aria-live="polite"></div>
-
-        <article id="preview" class="preview" hidden>
-          <img id="thumbnail" alt="영상 미리보기" />
-          <div class="preview-copy">
-            <span id="uploader" class="uploader"></span>
-            <h3 id="video-title"></h3>
-            <span id="duration" class="duration"></span>
+          <div class="app-window" aria-label="아워튜브 앱 사용 흐름 미리보기">
+            <div class="app-window-bar">
+              <span class="window-dot"></span>
+              <span class="window-title">아워튜브</span>
+              <span class="window-version">v0.2.5</span>
+            </div>
+            <div class="app-window-body">
+              <div class="app-url-preview">
+                <span>YouTube URL</span>
+                <div>
+                  <strong>youtube.com/watch?v=...</strong>
+                  <b>영상 확인</b>
+                </div>
+              </div>
+              <div class="app-preview-card">
+                <div class="app-thumbnail" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div class="app-preview-lines" aria-hidden="true">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                </div>
+              </div>
+              <div class="app-quality-row">
+                <span>MP4 · 재인코딩 없음</span>
+                <span>1080p</span>
+              </div>
+              <div class="app-save-button">저장 위치 선택 후 다운로드</div>
+            </div>
           </div>
-        </article>
+        </section>
 
-        <div id="download-controls" class="download-controls" hidden>
-          <div class="option-groups">
-            <span class="client-format">MP4 영상 · 재인코딩 없음</span>
-            <label class="quality-picker" for="video-quality">
-              <span>영상 화질</span>
-              <select id="video-quality" disabled>
-                <option value="">영상 분석 후 표시</option>
-              </select>
-            </label>
+        <section class="landing-section" aria-labelledby="steps-title">
+          <div class="landing-section-heading">
+            <p class="eyebrow">HOW IT WORKS</p>
+            <h2 id="steps-title">세 단계면 충분합니다.</h2>
           </div>
-          <button id="download-button" class="primary" type="button">내 PC에서 다운로드 시작</button>
-        </div>
+          <ol class="step-grid">
+            <li>
+              <span>01</span>
+              <h3>주소 붙여넣기</h3>
+              <p>앱에 저장할 권한이 있는 YouTube 영상 주소를 붙여넣습니다.</p>
+            </li>
+            <li>
+              <span>02</span>
+              <h3>화질 선택하기</h3>
+              <p>영상 정보를 확인한 뒤 원하는 MP4 화질을 선택합니다.</p>
+            </li>
+            <li>
+              <span>03</span>
+              <h3>내 PC에 저장하기</h3>
+              <p>저장 위치를 고르면 다운로드와 영상·음성 결합을 앱이 처리합니다.</p>
+            </li>
+          </ol>
+        </section>
 
-        <div id="progress-card" class="progress-card" hidden>
-          <div class="progress-labels">
-            <strong id="progress-state">준비 중</strong>
-            <span id="progress-detail">0%</span>
+        <section class="local-section" aria-labelledby="local-title">
+          <div>
+            <p class="eyebrow">WHY OURTUBE</p>
+            <h2 id="local-title">서버 대기 없이,<br />내 컴퓨터에서.</h2>
           </div>
-          <div class="progress-track">
-            <div id="progress-bar" class="progress-bar"></div>
-          </div>
-          <div class="download-summary">
-            <span id="format-summary">—</span>
-            <span id="size-summary">—</span>
-            <span id="written-size">0 B</span>
-          </div>
-          <p id="output-path"></p>
-          <button id="cancel-button" class="cancel-button" type="button" hidden>다운로드 취소</button>
-        </div>
-      </section>
+          <ul class="feature-list">
+            <li>
+              <strong>로컬 다운로드</strong>
+              <span>영상과 음성 데이터는 별도 영상 처리 서버가 아닌 사용자 PC에서 처리됩니다.</span>
+            </li>
+            <li>
+              <strong>원본 품질 유지</strong>
+              <span>가능한 경우 재인코딩 없이 영상과 음성을 MP4로 결합합니다.</span>
+            </li>
+            <li>
+              <strong>간편한 업데이트</strong>
+              <span>새 버전이 있으면 앱에서 확인하고, 사용자가 동의한 경우에만 업데이트합니다.</span>
+            </li>
+          </ul>
+        </section>
 
-      <footer>
-        <p>저장 위치 <code>Chrome 다운로드 폴더</code></p>
-        <div class="footer-actions">
-          <nav class="policy-links" aria-label="정책 및 문의">
-            <a href="/desktop">Windows 앱</a>
-            <a href="/privacy">개인정보 처리방침</a>
-            <a href="/terms">이용약관</a>
-            <a href="/support">문의</a>
-          </nav>
-          <button id="open-folder-button" class="folder-button"
-            type="button">다운로드 폴더 열기</button>
-        </div>
+        <section class="download-banner" aria-labelledby="download-title">
+          <div>
+            <p class="eyebrow">GET STARTED</p>
+            <h2 id="download-title">아워튜브를 시작하세요.</h2>
+            <p>설치 후에는 홈페이지를 다시 방문하지 않아도 앱 안에서 업데이트할 수 있습니다.</p>
+          </div>
+          <a class="hero-button hero-button-primary" href="/desktop">Windows 앱 다운로드</a>
+        </section>
+
+        <p class="rights-note">
+          본인이 제작했거나 YouTube 및 해당 권리자가 저장을 허용했거나, 관련 법률상 허용되는 콘텐츠에만 사용하세요.
+          <a href="/terms">이용약관 확인</a>
+        </p>
+      </main>
+
+      <footer class="landing-footer">
+        <p>© 2026 OurTube</p>
+        <nav aria-label="하단 메뉴">
+          <a href="/desktop">Windows 앱</a>
+          <a href="/privacy">개인정보 처리방침</a>
+          <a href="/terms">이용약관</a>
+          <a href="/support">문의</a>
+        </nav>
       </footer>
-    </main>
+    </div>
   </body>
 </html>

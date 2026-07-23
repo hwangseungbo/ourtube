@@ -466,6 +466,7 @@ const staticFiles = new Map([
   ["/desktop.html", ["desktop.html", "text/html; charset=utf-8"]],
   ["/app-version.json", ["app-version.json", "application/json; charset=utf-8"]],
   ["/favicon.ico", ["favicon.ico", "image/x-icon"]],
+  ["/og.png", ["og.png", "image/png"]],
   ["/icons/favicon-32.png", ["icons/favicon-32.png", "image/png"]],
   ["/icons/favicon-512.png", ["icons/favicon-512.png", "image/png"]],
   ["/icons/apple-touch-icon.png", ["icons/apple-touch-icon.png", "image/png"]],
