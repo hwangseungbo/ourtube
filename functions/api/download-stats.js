@@ -97,27 +97,37 @@ async function fetchGitHubStats() {
       "user-agent": "OurTube-Download-Stats",
       "x-github-api-version": "2022-11-28",
     },
+    cf: { cacheEverything: true, cacheTtl: GITHUB_CACHE_SECONDS },
   });
   if (!response.ok) throw new Error(`GitHub API ${response.status}`);
   return summarizeGitHubDownloads(await response.json());
 }
 
 async function getGitHubStats(database, nowEpoch) {
-  const cached = await readCachedGitHubStats(database, nowEpoch);
+  let cached = null;
+  try {
+    cached = await readCachedGitHubStats(database, nowEpoch);
+  } catch {
+    // GitHub의 실제 집계는 D1 캐시 장애와 관계없이 조회한다.
+  }
   if (cached?.fresh) return { ...cached.value, cached: true };
 
   try {
     const value = await fetchGitHubStats();
-    await database
-      .prepare(
-        `INSERT INTO download_metadata (metadata_key, metadata_value, updated_at_epoch)
-         VALUES (?, ?, ?)
-         ON CONFLICT(metadata_key) DO UPDATE SET
-           metadata_value = excluded.metadata_value,
-           updated_at_epoch = excluded.updated_at_epoch`,
-      )
-      .bind(GITHUB_CACHE_KEY, JSON.stringify(value), nowEpoch)
-      .run();
+    try {
+      await database
+        .prepare(
+          `INSERT INTO download_metadata (metadata_key, metadata_value, updated_at_epoch)
+           VALUES (?, ?, ?)
+           ON CONFLICT(metadata_key) DO UPDATE SET
+             metadata_value = excluded.metadata_value,
+             updated_at_epoch = excluded.updated_at_epoch`,
+        )
+        .bind(GITHUB_CACHE_KEY, JSON.stringify(value), nowEpoch)
+        .run();
+    } catch {
+      // 캐시 저장에 실패해도 방금 읽은 GitHub 집계는 정상 반환한다.
+    }
     return { ...value, cached: false };
   } catch {
     return cached ? { ...cached.value, cached: true, stale: true } : null;
