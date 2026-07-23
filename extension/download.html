@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>위튜브 · 내 PC에서 MP4 만들기</title>
+    <link rel="stylesheet" href="download.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">CLIENT-SIDE DOWNLOAD</p>
+        <h1>내 PC에서 MP4 만들기</h1>
+        <p class="lead">영상·음성을 Chrome에서 직접 내려받고, 재인코딩 없이 하나의 MP4로 결합합니다.</p>
+      </header>
+
+      <section class="card info-card">
+        <div>
+          <span class="label">영상</span>
+          <strong id="video-title">스트림 분석 전</strong>
+          <small id="source-url"></small>
+          <label id="quality-field" class="quality-field" for="video-quality" hidden>
+            <span>영상 화질</span>
+            <select id="video-quality"></select>
+          </label>
+        </div>
+        <dl>
+          <div><dt>결합 형식</dt><dd id="format-summary">—</dd></div>
+          <div><dt>예상 크기</dt><dd id="size-summary">—</dd></div>
+          <div><dt>작성량</dt><dd id="written-size">0 B</dd></div>
+        </dl>
+      </section>
+
+      <section class="card progress-card">
+        <div class="progress-heading">
+          <span>다운로드 및 결합</span>
+          <strong id="progress-text">0%</strong>
+        </div>
+        <progress id="progress" max="100" value="0"></progress>
+        <p id="status" role="status" aria-live="polite">스트림 분석을 눌러 시작하세요.</p>
+      </section>
+
+      <div class="actions">
+        <button id="prepare" type="button">스트림 분석</button>
+        <button id="download" type="button" disabled>저장 위치 선택 및 다운로드</button>
+        <button id="cancel" class="ghost" type="button" hidden>취소</button>
+      </div>
+
+      <aside>
+        <strong>처리 위치</strong>
+        <p id="mode-note">다운로드와 MP4 결합은 이 Chrome과 사용자 PC에서 처리됩니다.</p>
+      </aside>
+    </main>
+    <iframe id="runtime-sandbox" title="YouTube 브라우저 검증 실행 환경" hidden></iframe>
+    <script src="download.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "위튜브 클라이언트 다운로더",
+  "version": "0.9.0",
+  "minimum_chrome_version": "116",
+  "description": "사용자 Chrome에서 YouTube 미디어를 받아 로컬 MP4로 결합합니다.",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "offscreen",
+    "scripting",
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:4545/*",
+    "http://localhost:4545/*",
+    "https://ourtube.kr/*",
+    "https://www.ourtube.kr/*",
+    "https://*.youtube.com/*",
+    "https://youtubei.googleapis.com/*",
+    "https://jnn-pa.googleapis.com/*",
+    "https://*.googlevideo.com/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "위튜브 클라이언트 다운로더",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://127.0.0.1:4545/*",
+        "http://localhost:4545/*",
+        "https://ourtube.kr/*",
+        "https://www.ourtube.kr/*"
+      ],
+      "js": ["web-bridge.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["youtube-main.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["youtube-bridge.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "sandbox": {
+    "pages": ["sandbox.html"]
+  }
+}

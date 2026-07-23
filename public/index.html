@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="권한이 있는 YouTube 영상을 사용자 PC에서 분석하고 MP4로 저장하는 도구" />
+    <title>위튜브 · 내 PC에서 영상 저장</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <span class="eyebrow">OURTUBE.KR · CLIENT-SIDE</span>
+        <h1>필요한 영상만,<br /><em>내 컴퓨터에.</em></h1>
+        <p>본인이 제작했거나 저장 허락을 받은 YouTube 영상을 사용자 PC에서 MP4로 저장합니다.</p>
+      </header>
+
+      <section class="panel" aria-labelledby="download-title">
+        <div class="section-heading">
+          <span>01</span>
+          <h2 id="download-title">영상 링크</h2>
+        </div>
+
+        <form id="inspect-form">
+          <label for="video-url">YouTube URL</label>
+          <div class="url-row">
+            <input id="video-url" name="url" type="url" inputmode="url" autocomplete="off"
+              placeholder="https://www.youtube.com/watch?v=..." required />
+            <button id="inspect-button" type="submit">새 탭 없이 영상 분석</button>
+          </div>
+
+          <p id="extension-status" class="extension-status">확장 프로그램 연결을 확인하는 중입니다…</p>
+
+          <label class="confirmation">
+            <input id="rights-confirmed" type="checkbox" required />
+            <span>이 영상을 저장할 권한이 있거나, 이용 허락·공개 라이선스를 확인했습니다.</span>
+          </label>
+        </form>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+
+        <article id="preview" class="preview" hidden>
+          <img id="thumbnail" alt="영상 미리보기" />
+          <div class="preview-copy">
+            <span id="uploader" class="uploader"></span>
+            <h3 id="video-title"></h3>
+            <span id="duration" class="duration"></span>
+          </div>
+        </article>
+
+        <div id="download-controls" class="download-controls" hidden>
+          <div class="option-groups">
+            <span class="client-format">MP4 영상 · 재인코딩 없음</span>
+            <label class="quality-picker" for="video-quality">
+              <span>영상 화질</span>
+              <select id="video-quality" disabled>
+                <option value="">영상 분석 후 표시</option>
+              </select>
+            </label>
+          </div>
+          <button id="download-button" class="primary" type="button">내 PC에서 다운로드 시작</button>
+        </div>
+
+        <div id="progress-card" class="progress-card" hidden>
+          <div class="progress-labels">
+            <strong id="progress-state">준비 중</strong>
+            <span id="progress-detail">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+          <div class="download-summary">
+            <span id="format-summary">—</span>
+            <span id="size-summary">—</span>
+            <span id="written-size">0 B</span>
+          </div>
+          <p id="output-path"></p>
+          <button id="cancel-button" class="cancel-button" type="button" hidden>다운로드 취소</button>
+        </div>
+      </section>
+
+      <footer>
+        <p>저장 위치 <code>Chrome 다운로드 폴더</code></p>
+        <button id="open-folder-button" class="folder-button"
+          type="button">다운로드 폴더 열기</button>
+      </footer>
+    </main>
+  </body>
+</html>

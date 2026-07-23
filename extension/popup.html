@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Googlevideo 연결 테스트</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">위튜브 PoC</p>
+      <h1>클라이언트 요청 테스트</h1>
+      <p class="description">
+        영상과 음성을 다운로드하지 않고 각각 64KB만 Chrome에서 직접 요청합니다.
+      </p>
+
+      <label class="field" for="video-url">
+        <span>YouTube 영상 주소</span>
+        <input id="video-url" type="url" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=...">
+      </label>
+
+      <label class="rights">
+        <input id="rights-confirmed" type="checkbox">
+        <span>본인 소유 또는 다운로드 권한이 있는 영상입니다.</span>
+      </label>
+
+      <button id="run-probe" type="button">영상·음성 64KB 요청</button>
+      <section class="capture-box">
+        <div>
+          <strong>로컬 서버 없는 방식</strong>
+          <p id="capture-status">YouTube 영상을 재생하면 요청을 포착합니다.</p>
+        </div>
+        <button id="capture-download" type="button" disabled>포착 요청으로 다운로드</button>
+      </section>
+      <button id="open-download" class="secondary" type="button">로컬 서버 방식 다운로드</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <section id="results" class="results" aria-label="테스트 결과"></section>
+    </main>
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>
