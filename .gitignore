@@ -3,5 +3,6 @@ downloads/*
 node_modules/
 .tmp/
 dist-desktop/
+.generated-licenses/
 .DS_Store
 Thumbs.db

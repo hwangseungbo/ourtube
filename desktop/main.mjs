@@ -44,6 +44,8 @@ const allowedExternalUrls = new Set([
   updateDownloadPageUrl,
   "https://ourtube.kr/privacy",
   "https://ourtube.kr/terms",
+  "https://ourtube.kr/open-source",
+  "https://ourtube.kr/code-signing",
   "https://ourtube.kr/support",
 ]);
 const inspections = new Map();

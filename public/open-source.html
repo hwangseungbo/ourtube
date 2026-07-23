@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="description" content="아워튜브 오픈소스 라이선스와 제3자 소프트웨어 고지" />
+    <link rel="canonical" href="https://ourtube.kr/open-source" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="아워튜브" />
+    <meta property="og:title" content="오픈소스 · 아워튜브" />
+    <meta property="og:description" content="아워튜브 소스 코드와 제3자 소프트웨어 라이선스 안내" />
+    <meta property="og:url" content="https://ourtube.kr/open-source" />
+    <meta property="og:image" content="https://ourtube.kr/icons/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <title>오픈소스 · 아워튜브</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/legal.css" />
+  </head>
+  <body class="legal-page">
+    <div class="legal-shell">
+      <header class="legal-topbar">
+        <a class="site-logo legal-logo" href="/" aria-label="아워튜브 홈">
+          <img src="/icons/logo.png" alt="아워튜브" width="1254" height="1254" />
+        </a>
+        <nav class="legal-nav" aria-label="사이트 메뉴">
+          <a href="/desktop">Windows 앱</a>
+          <a href="/open-source" aria-current="page">오픈소스</a>
+          <a href="/privacy">개인정보 처리방침</a>
+          <a href="/terms">이용약관</a>
+          <a href="/support">문의</a>
+        </nav>
+      </header>
+
+      <main class="legal-content">
+        <p class="legal-kicker">OPEN SOURCE</p>
+        <h1>오픈소스<br />라이선스</h1>
+        <p class="legal-lede">
+          아워튜브의 자체 소스 코드와 배포물에 포함되는 제3자 소프트웨어의 라이선스를 안내합니다.
+        </p>
+        <p class="effective-date">최종 수정일: 2026년 7월 23일</p>
+
+        <section class="legal-section">
+          <h2>아워튜브 소스 코드</h2>
+          <div class="legal-callout">
+            <p>
+              아워튜브 자체 소스 코드는 <strong>GNU General Public License version 3 or later</strong>로
+              배포됩니다.
+            </p>
+          </div>
+          <p>
+            소스 코드와 정확한 라이선스 전문은
+            <a href="https://github.com/hwangseungbo/ourtube" target="_blank" rel="noreferrer"
+              >공식 GitHub 저장소</a
+            >에서 확인할 수 있습니다. 수정본을 배포하는 경우 GPL이 요구하는 대응 소스 제공과 라이선스 고지를
+            지켜야 합니다.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>제3자 구성요소</h2>
+          <ul>
+            <li>FFmpeg 6.1.1 essentials build — GPL v3</li>
+            <li>yt-dlp 2026.07.04 — The Unlicense 및 번들 구성요소의 라이선스</li>
+            <li>Electron 43.2.0 — MIT 및 Chromium 제3자 라이선스</li>
+            <li>Mediabunny 1.50.9 — MPL-2.0</li>
+            <li>youtubei.js, googlevideo, bgutils-js 등 — 각 패키지의 MIT 계열 라이선스</li>
+          </ul>
+          <p>
+            정확한 버전과 고지는 저장소의
+            <a
+              href="https://github.com/hwangseungbo/ourtube/blob/main/THIRD_PARTY_NOTICES.md"
+              target="_blank"
+              rel="noreferrer"
+              >THIRD_PARTY_NOTICES.md</a
+            >를 기준으로 합니다. Windows 설치본에도 런타임 의존성, Electron·Chromium 및 FFmpeg의
+            라이선스 문서를 포함합니다.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>FFmpeg 대응 소스</h2>
+          <p>
+            공개 릴리스에는 포함된 FFmpeg 바이너리의 버전, 해시, 빌드 정보와 대응 소스를 같은 릴리스에서
+            받을 수 있는 방법을 표시합니다. 대응 소스와 필수 고지가 준비되지 않은 빌드는 공식 배포하지 않습니다.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>상표와 공식 배포물</h2>
+          <p>
+            GPL은 소프트웨어 코드에 적용됩니다. 아워튜브·OurTube 명칭과 로고는 수정본을 공식 제품으로
+            오인시키는 방식으로 사용할 수 없습니다. 공식 설치 파일은
+            <a href="/desktop">Windows 앱 페이지</a>에서 연결하는 배포물만을 기준으로 합니다.
+          </p>
+        </section>
+      </main>
+
+      <footer class="legal-footer">
+        <p>© 2026 OurTube</p>
+        <nav aria-label="하단 메뉴">
+          <a href="/">홈</a>
+          <a href="/desktop">Windows 앱</a>
+          <a href="/privacy">개인정보 처리방침</a>
+          <a href="/terms">이용약관</a>
+          <a href="/code-signing">코드 서명 정책</a>
+          <a href="/support">문의</a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

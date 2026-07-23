@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="description" content="아워튜브 Windows 설치 파일의 코드 서명 및 무결성 검증 정책" />
+    <link rel="canonical" href="https://ourtube.kr/code-signing" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="아워튜브" />
+    <meta property="og:title" content="코드 서명 정책 · 아워튜브" />
+    <meta property="og:description" content="아워튜브 Windows 설치 파일의 서명 및 검증 원칙" />
+    <meta property="og:url" content="https://ourtube.kr/code-signing" />
+    <meta property="og:image" content="https://ourtube.kr/icons/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <title>코드 서명 정책 · 아워튜브</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/legal.css" />
+  </head>
+  <body class="legal-page">
+    <div class="legal-shell">
+      <header class="legal-topbar">
+        <a class="site-logo legal-logo" href="/" aria-label="아워튜브 홈">
+          <img src="/icons/logo.png" alt="아워튜브" width="1254" height="1254" />
+        </a>
+        <nav class="legal-nav" aria-label="사이트 메뉴">
+          <a href="/desktop">Windows 앱</a>
+          <a href="/open-source">오픈소스</a>
+          <a href="/code-signing" aria-current="page">코드 서명 정책</a>
+          <a href="/support">문의</a>
+        </nav>
+      </header>
+
+      <main class="legal-content">
+        <p class="legal-kicker">CODE SIGNING POLICY</p>
+        <h1>코드 서명<br />정책</h1>
+        <p class="legal-lede">
+          공식 Windows 설치 파일의 출처와 무결성을 확인하고, 향후 SignPath 서명을 적용하는 원칙입니다.
+        </p>
+        <p class="effective-date">최종 수정일: 2026년 7월 23일</p>
+
+        <section class="legal-section">
+          <h2>현재 배포 상태</h2>
+          <div class="legal-callout">
+            <p>
+              현재 공개된 0.2.5 설치 파일은 <strong>아직 Authenticode 서명이 적용되지 않았습니다.</strong>
+              Windows에서 알 수 없는 게시자로 표시될 수 있습니다.
+            </p>
+          </div>
+          <p>
+            설치 파일은 <a href="/desktop">공식 다운로드 페이지</a>에서 연결하는 GitHub Releases를 통해서만
+            내려받고, 게시된 SHA-256 값과 일치하는지 확인하세요.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>SignPath 적용 원칙</h2>
+          <ol>
+            <li>공개 GitHub 저장소의 태그와 GitHub Actions 빌드만 서명 대상으로 사용합니다.</li>
+            <li>릴리스 서명 요청은 권한 있는 관리자가 수동 승인합니다.</li>
+            <li>서명된 파일을 기준으로 업데이트 메타데이터와 체크섬을 생성합니다.</li>
+            <li>FFmpeg와 yt-dlp 같은 업스트림 바이너리를 아워튜브 자체 파일인 것처럼 서명하지 않습니다.</li>
+            <li>GitHub와 SignPath 계정에 2단계 인증을 적용하고 개인 키를 저장소에 보관하지 않습니다.</li>
+          </ol>
+          <p>
+            SignPath Foundation의 승인을 받기 전에는 SignPath가 현재 배포물을 서명하거나 보증한다고 표시하지
+            않습니다. 승인 후 실제 서명된 릴리스부터 인증서 정보와 SignPath가 요구하는 제공 문구를 게시합니다.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>검증과 신고</h2>
+          <p>
+            공식 페이지의 버전·파일명·해시 또는 향후 표시될 서명 게시자가 일치하지 않으면 파일을 실행하지 말고
+            <a href="mailto:support@ourtube.kr">support@ourtube.kr</a>로 알려 주세요.
+          </p>
+        </section>
+      </main>
+
+      <footer class="legal-footer">
+        <p>© 2026 OurTube</p>
+        <nav aria-label="하단 메뉴">
+          <a href="/">홈</a>
+          <a href="/desktop">Windows 앱</a>
+          <a href="/open-source">오픈소스</a>
+          <a href="/privacy">개인정보 처리방침</a>
+          <a href="/terms">이용약관</a>
+          <a href="/support">문의</a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>
