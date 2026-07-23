@@ -35,13 +35,23 @@ body {
   justify-content: space-between;
 }
 
+.logo-frame {
+  position: relative;
+  width: 190px;
+  height: 44px;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
 .logo {
+  position: absolute;
+  top: 50%;
+  left: 0;
   display: block;
-  width: 132px;
-  height: 42px;
+  width: 190px;
+  height: 190px;
   margin: 0;
-  object-fit: contain;
-  object-position: left center;
+  transform: translateY(-50%);
 }
 
 .desktop-badge {

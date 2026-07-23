@@ -1,11 +1,8 @@
 {
-  "version": "0.2.2",
+  "version": "0.2.3",
   "downloadPage": "https://ourtube.kr/desktop",
-  "sha256": "5BDC624D7D20225BADF151D9A199894853AF80AEFA17FDC6C238AA2A032BCB7C",
+  "sha256": "D22E994CA0D33A0F530962430622EDE04BEA2380F67C5D08AEAC434593B06702",
   "releaseNotes": [
-    "고정 크기와 무스크롤 데스크톱 화면",
-    "권한 확인 체크 절차 제거",
-    "영상 전용 스트림과 최고 품질 M4A 음성 우선 결합",
-    "사용자가 선택하는 안전한 수동 업데이트 확인"
+    "앱 좌상단 아워튜브 로고 크기와 가독성 개선"
   ]
 }
