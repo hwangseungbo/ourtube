@@ -1,8 +1,17 @@
 {
   "name": "ourtube",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "사용자 PC에서 영상 분석과 MP4 결합을 처리하는 아워튜브 Windows 데스크톱 앱",
   "author": "OurTube",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://ourtube.kr/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hwangseungbo/ourtube.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hwangseungbo/ourtube/issues"
+  },
   "private": true,
   "type": "module",
   "main": "desktop/main.mjs",
@@ -14,10 +23,12 @@
     "dev": "node --watch server.mjs",
     "desktop": "electron .",
     "desktop:check": "node --check desktop/main.mjs && node --check desktop/core.mjs && node --check desktop/renderer.js && node --check desktop/preload.cjs",
-    "desktop:dir": "npm run desktop:check && electron-builder --win --dir",
-    "desktop:dist": "npm run desktop:check && electron-builder --win nsis",
-    "build:extension": "esbuild ./extension/src/download-entry.js --bundle --format=esm --platform=browser --target=chrome116 --outfile=./extension/download.js && esbuild ./extension/src/offscreen-entry.js --bundle --format=esm --platform=browser --target=chrome116 --outfile=./extension/offscreen.js && esbuild ./extension/src/sandbox-entry.js --bundle --format=esm --platform=browser --target=chrome116 --outfile=./extension/sandbox.js && esbuild ./extension/src/sandbox-entry.js --bundle --format=esm --platform=browser --target=chrome116 --outfile=./public/botguard-runtime.js",
-    "check": "npm run build:extension && node --check server.mjs && node --check public/app.js && node --check extension/service-worker.js && node --check extension/web-bridge.js && node --check extension/youtube-main.js && node --check extension/youtube-bridge.js && node --check extension/popup.js && node --check extension/src/remux.js && node --check extension/src/download-entry.js && node --check extension/src/offscreen-entry.js && node --check extension/src/direct-extractor.js && node --check extension/src/onesie.js && node --check extension/src/sandbox-client.js && node --check extension/src/sandbox-entry.js",
+    "licenses:audit": "node scripts/license-audit.mjs",
+    "licenses:prepare": "node scripts/prepare-license-bundle.mjs",
+    "desktop:dir": "npm run desktop:check && npm run licenses:prepare && electron-builder --win --dir",
+    "desktop:dist": "npm run desktop:check && npm run licenses:prepare && electron-builder --win nsis",
+    "build:extension": "node scripts/build-extension.mjs",
+    "check": "npm run build:extension && npm run licenses:audit && node --check server.mjs && node --check public/app.js && node --check extension/service-worker.js && node --check extension/web-bridge.js && node --check extension/youtube-main.js && node --check extension/youtube-bridge.js && node --check extension/popup.js && node --check extension/src/remux.js && node --check extension/src/download-entry.js && node --check extension/src/offscreen-entry.js && node --check extension/src/direct-extractor.js && node --check extension/src/onesie.js && node --check extension/src/sandbox-client.js && node --check extension/src/sandbox-entry.js",
     "test": "node --test tests/extension-probe.test.mjs tests/desktop-core.test.mjs"
   },
   "dependencies": {
@@ -64,6 +75,10 @@
       {
         "from": "node_modules/ffmpeg-static/ffmpeg.exe",
         "to": "bin/ffmpeg.exe"
+      },
+      {
+        "from": ".generated-licenses",
+        "to": "licenses"
       }
     ],
     "protocols": [

@@ -959,6 +959,42 @@ footer code {
   text-align: center;
 }
 
+.rights-banner {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+  gap: 38px;
+  align-items: center;
+  margin: 22px 0 0;
+  padding: 28px 30px;
+  border: 1px solid rgba(255, 73, 61, 0.38);
+  border-radius: 20px;
+  background: rgba(255, 73, 61, 0.07);
+}
+
+.rights-banner h2,
+.rights-banner p {
+  margin: 0;
+}
+
+.rights-banner h2 {
+  margin-top: 8px;
+  font-size: clamp(1.25rem, 2.6vw, 1.85rem);
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+
+.rights-banner > p {
+  color: var(--muted);
+  font-size: 0.91rem;
+  line-height: 1.75;
+}
+
+.rights-banner a {
+  color: var(--ink);
+  font-weight: 800;
+  text-underline-offset: 4px;
+}
+
 .rights-note a {
   margin-left: 4px;
   text-decoration: underline;
@@ -1089,6 +1125,12 @@ footer code {
     align-items: stretch;
     flex-direction: column;
     margin-top: 70px;
+  }
+
+  .rights-banner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 22px;
   }
 
   .landing-footer {

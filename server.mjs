@@ -464,6 +464,10 @@ const staticFiles = new Map([
   ["/support.html", ["support.html", "text/html; charset=utf-8"]],
   ["/desktop", ["desktop.html", "text/html; charset=utf-8"]],
   ["/desktop.html", ["desktop.html", "text/html; charset=utf-8"]],
+  ["/open-source", ["open-source.html", "text/html; charset=utf-8"]],
+  ["/open-source.html", ["open-source.html", "text/html; charset=utf-8"]],
+  ["/code-signing", ["code-signing.html", "text/html; charset=utf-8"]],
+  ["/code-signing.html", ["code-signing.html", "text/html; charset=utf-8"]],
   ["/app-version.json", ["app-version.json", "application/json; charset=utf-8"]],
   ["/favicon.ico", ["favicon.ico", "image/x-icon"]],
   ["/og.png", ["og.png", "image/png"]],
@@ -522,7 +526,7 @@ async function handleRequest(request, response) {
       );
       const version = /^\d+\.\d+\.\d+$/.test(versionPayload?.version)
         ? versionPayload.version
-        : "0.2.5";
+        : "0.2.6";
       response.writeHead(302, {
         "cache-control": "no-store",
         location: `https://github.com/hwangseungbo/ourtube-releases/releases/download/v${version}/OurTube-Setup-${version}.exe`,
