@@ -10,20 +10,25 @@ import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import {
   access,
-  copyFile,
   mkdir,
   mkdtemp,
   readdir,
   rm,
   stat,
 } from "node:fs/promises";
-import { constants as fsConstants } from "node:fs";
+import {
+  constants as fsConstants,
+  createReadStream,
+  createWriteStream,
+} from "node:fs";
+import { pipeline } from "node:stream/promises";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   buildFormatSelector,
   compareVersions,
+  createDownloadProgressTracker,
   normalizeYouTubeUrl,
   parseProgressLine,
   sanitizeFilename,
@@ -387,6 +392,29 @@ function emitProgress(payload) {
   }
 }
 
+async function copyFileWithProgress(sourcePath, destinationPath, onProgress) {
+  const details = await stat(sourcePath);
+  const totalBytes = Math.max(0, Number(details.size) || 0);
+  let copiedBytes = 0;
+  let lastEmittedAt = 0;
+  const source = createReadStream(sourcePath);
+  const destination = createWriteStream(destinationPath);
+
+  source.on("data", (chunk) => {
+    copiedBytes += chunk.length;
+    const now = Date.now();
+    if (copiedBytes < totalBytes && now - lastEmittedAt < 100) return;
+    lastEmittedAt = now;
+    onProgress({
+      copiedBytes,
+      totalBytes,
+      fraction: totalBytes > 0 ? Math.min(1, copiedBytes / totalBytes) : 1,
+    });
+  });
+
+  await pipeline(source, destination);
+}
+
 async function inspectVideo(sourceUrl) {
   if (activeJob) throw new Error("다른 작업이 진행 중입니다.");
   const normalizedUrl = normalizeYouTubeUrl(sourceUrl);
@@ -479,6 +507,9 @@ async function startDownload(event, { analysisId, qualityId }) {
   const temporaryDirectory = await mkdtemp(path.join(temporaryRoot, "job-"));
   const outputTemplate = path.join(temporaryDirectory, "output.%(ext)s");
   const formatSelector = buildFormatSelector(format);
+  const trackDownloadProgress = createDownloadProgressTracker({
+    separateAudio: !format.hasAudio,
+  });
   let reportedPath = "";
 
   emitProgress({
@@ -491,6 +522,7 @@ async function startDownload(event, { analysisId, qualityId }) {
   const args = [
     "--no-playlist",
     "--newline",
+    "--progress-delta", "0.25",
     "--windows-filenames",
     "--encoding", "utf-8",
     "--ffmpeg-location", tools.ffmpeg,
@@ -498,36 +530,46 @@ async function startDownload(event, { analysisId, qualityId }) {
     "--merge-output-format", "mp4",
     "--output", outputTemplate,
     "--progress-template",
-    "download:__OURTUBE_PROGRESS__:%(progress._percent_str)s|%(progress.downloaded_bytes)s|%(progress.total_bytes_estimate)s|%(progress.speed)s|%(progress.eta)s",
+    "download:__OURTUBE_PROGRESS__:%(progress._percent_str)s|%(progress.downloaded_bytes)s|%(progress.total_bytes_estimate)s|%(progress.speed)s|%(progress.eta)s|%(info.format_id)s",
     "--print", "after_move:__OURTUBE_FILE__:%(filepath)s",
     inspection.sourceUrl,
   ];
 
   try {
+    const handleProgressLine = (line) => {
+      const rawProgress = parseProgressLine(line);
+      if (!rawProgress) return false;
+      const progress = trackDownloadProgress(rawProgress);
+      const partLabel = progress.downloadPart === "audio"
+        ? "음성"
+        : progress.downloadPart === "video"
+          ? "영상"
+          : "영상";
+      emitProgress({
+        jobId,
+        state: "downloading",
+        message: `${partLabel} 데이터를 이 PC로 내려받고 있습니다…`,
+        ...progress,
+      });
+      return true;
+    };
+
     await runProcess(tools.ytDlp, args, {
       jobId,
       onStdoutLine(line) {
-        const progress = parseProgressLine(line);
-        if (progress) {
-          emitProgress({
-            jobId,
-            state: "downloading",
-            message: "영상·음성을 이 PC로 내려받고 있습니다…",
-            ...progress,
-          });
-          return;
-        }
+        if (handleProgressLine(line)) return;
         if (line.startsWith("__OURTUBE_FILE__:")) {
           reportedPath = line.slice("__OURTUBE_FILE__:".length).trim();
         }
       },
       onStderrLine(line) {
+        if (handleProgressLine(line)) return;
         if (/\[(Merger|VideoRemuxer)\]/.test(line)) {
           emitProgress({
             jobId,
             state: "merging",
             message: "이 PC에서 영상과 음성을 MP4로 결합하는 중입니다…",
-            percent: 100,
+            percent: 96,
           });
         }
       },
@@ -539,9 +581,24 @@ async function startDownload(event, { analysisId, qualityId }) {
       jobId,
       state: "saving",
       message: "선택한 위치에 MP4를 저장하는 중입니다…",
-      percent: 100,
+      percent: 98,
     });
-    await copyFile(completedFile, destination.filePath);
+    await copyFileWithProgress(completedFile, destination.filePath, ({
+      copiedBytes,
+      totalBytes,
+      fraction,
+    }) => {
+      emitProgress({
+        jobId,
+        state: "saving",
+        message: "선택한 위치에 MP4를 저장하는 중입니다…",
+        percent: 98 + (fraction * 1.9),
+        downloadedBytes: copiedBytes,
+        totalBytes,
+        speed: 0,
+        eta: null,
+      });
+    });
     lastCompletedPath = destination.filePath;
     inspections.delete(String(analysisId));
     emitProgress({

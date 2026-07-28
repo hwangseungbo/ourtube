@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   buildFormatSelector,
   compareVersions,
+  createDownloadProgressTracker,
   getYouTubeVideoId,
   normalizeYouTubeUrl,
   parseProgressLine,
@@ -66,8 +67,43 @@ test("앱 버전을 세 자리 숫자로 안전하게 비교한다", () => {
 
 test("yt-dlp 진행률 메시지를 앱 진행률로 변환한다", () => {
   assert.deepEqual(
-    parseProgressLine("__OURTUBE_PROGRESS__:42.5%|1000|2000|500|2"),
-    { percent: 42.5, downloadedBytes: 1000, totalBytes: 2000, speed: 500, eta: 2 },
+    parseProgressLine("__OURTUBE_PROGRESS__:42.5%|1000|2000|500|2|137"),
+    {
+      percent: 42.5,
+      downloadedBytes: 1000,
+      totalBytes: 2000,
+      speed: 500,
+      eta: 2,
+      formatId: "137",
+    },
   );
   assert.equal(parseProgressLine("[download] 42%"), null);
+});
+
+test("영상·음성 다운로드 진행률을 하나의 단조 증가 구간으로 합친다", () => {
+  const track = createDownloadProgressTracker({ separateAudio: true });
+
+  assert.equal(track({ percent: 50, formatId: "137" }).percent, 37.5);
+  assert.equal(track({ percent: 100, formatId: "137" }).percent, 75);
+  const audioStart = track({ percent: 10, formatId: "140" });
+  assert.equal(audioStart.downloadPart, "audio");
+  assert.equal(audioStart.percent, 76.7);
+  assert.equal(track({ percent: 100, formatId: "140" }).percent, 92);
+});
+
+test("형식 ID가 같아도 진행률 초기화를 음성 단계로 인식하고 역행하지 않는다", () => {
+  const track = createDownloadProgressTracker({ separateAudio: true });
+
+  assert.equal(track({ percent: 100, formatId: "combined" }).percent, 75);
+  const reset = track({ percent: 5, formatId: "combined" });
+  assert.equal(reset.downloadPart, "audio");
+  assert.equal(reset.percent, 75.85);
+});
+
+test("음성이 포함된 단일 스트림은 다운로드 구간 전체를 사용한다", () => {
+  const track = createDownloadProgressTracker({ separateAudio: false });
+
+  const progress = track({ percent: 50, formatId: "18" });
+  assert.equal(progress.downloadPart, "media");
+  assert.equal(progress.percent, 46);
 });

@@ -132,7 +132,7 @@ export function compareVersions(left, right) {
 export function parseProgressLine(line) {
   const prefix = "__OURTUBE_PROGRESS__:";
   if (!String(line).startsWith(prefix)) return null;
-  const [rawPercent, rawDownloaded, rawTotal, rawSpeed, rawEta] = String(line)
+  const [rawPercent, rawDownloaded, rawTotal, rawSpeed, rawEta, rawFormatId] = String(line)
     .slice(prefix.length)
     .split("|");
   const percent = Number.parseFloat(String(rawPercent || "").replace("%", "").trim());
@@ -140,11 +140,56 @@ export function parseProgressLine(line) {
   const totalBytes = Number(rawTotal) || 0;
   const speed = Number(rawSpeed) || 0;
   const eta = Number(rawEta);
+  const formatId = String(rawFormatId || "").trim();
   return {
     percent: Number.isFinite(percent) ? Math.min(100, Math.max(0, percent)) : 0,
     downloadedBytes,
     totalBytes,
     speed,
     eta: Number.isFinite(eta) ? Math.max(0, eta) : null,
+    formatId: formatId === "NA" ? "" : formatId,
+  };
+}
+
+export function createDownloadProgressTracker({ separateAudio = false } = {}) {
+  const ranges = separateAudio
+    ? [[0, 75], [75, 92]]
+    : [[0, 92]];
+  const phaseByFormat = new Map();
+  let fallbackPhase = 0;
+  let previousRawPercent = 0;
+  let lastOverallPercent = 0;
+
+  return (progress) => {
+    const rawPercent = Math.min(100, Math.max(0, Number(progress?.percent) || 0));
+    let phaseIndex = 0;
+
+    if (separateAudio) {
+      if (fallbackPhase === 0 && previousRawPercent >= 90 && rawPercent < 50) {
+        fallbackPhase = 1;
+      }
+      const formatId = String(progress?.formatId || "").trim();
+      if (formatId) {
+        if (!phaseByFormat.has(formatId)) {
+          phaseByFormat.set(formatId, Math.min(phaseByFormat.size, ranges.length - 1));
+        }
+        phaseIndex = Math.max(phaseByFormat.get(formatId), fallbackPhase);
+      } else {
+        phaseIndex = fallbackPhase;
+      }
+    }
+
+    previousRawPercent = rawPercent;
+    const [rangeStart, rangeEnd] = ranges[Math.min(phaseIndex, ranges.length - 1)];
+    const mappedPercent = rangeStart + ((rangeEnd - rangeStart) * rawPercent / 100);
+    lastOverallPercent = Math.max(lastOverallPercent, mappedPercent);
+
+    return {
+      ...progress,
+      percent: lastOverallPercent,
+      downloadPart: separateAudio
+        ? (phaseIndex === 0 ? "video" : "audio")
+        : "media",
+    };
   };
 }

@@ -27,6 +27,8 @@ const openFolderButton = document.querySelector("#open-folder-button");
 let engineReady = false;
 let prepared = null;
 let running = false;
+let progressJobId = "";
+let displayedProgressPercent = 0;
 
 function showMessage(message, tone = "info") {
   messageElement.textContent = message || "";
@@ -140,6 +142,8 @@ downloadButton.addEventListener("click", async () => {
   progressState.textContent = "다운로드 준비 중";
   progressDetail.textContent = "0%";
   progressBar.style.width = "0%";
+  progressJobId = "";
+  displayedProgressPercent = 0;
   speedSummary.textContent = "—";
   outputPath.textContent = "";
   cancelButton.hidden = false;
@@ -198,6 +202,10 @@ engineVersion.addEventListener("click", async () => {
 
 api.onProgress((event) => {
   progressCard.hidden = false;
+  if (event.jobId && event.jobId !== progressJobId) {
+    progressJobId = event.jobId;
+    displayedProgressPercent = 0;
+  }
   const labels = {
     starting: "다운로드 준비 중",
     downloading: "영상·음성 다운로드 중",
@@ -207,13 +215,33 @@ api.onProgress((event) => {
     canceled: "취소됨",
     failed: "실패",
   };
-  progressState.textContent = labels[event.state] || "처리 중";
+  const downloadLabel = event.downloadPart === "audio"
+    ? "음성 다운로드 중"
+    : event.downloadPart === "video"
+      ? "영상 다운로드 중"
+      : labels.downloading;
+  progressState.textContent = event.state === "downloading"
+    ? downloadLabel
+    : labels[event.state] || "처리 중";
   if (Number.isFinite(event.percent)) {
     const percent = Math.min(100, Math.max(0, event.percent));
-    progressDetail.textContent = `${percent.toFixed(percent % 1 ? 1 : 0)}%`;
-    progressBar.style.width = `${percent}%`;
+    displayedProgressPercent = Math.max(displayedProgressPercent, percent);
+    progressDetail.textContent = `${displayedProgressPercent.toFixed(displayedProgressPercent % 1 ? 1 : 0)}%`;
+    progressBar.style.width = `${displayedProgressPercent}%`;
   }
-  if (event.speed) speedSummary.textContent = `${formatBytes(event.speed)}/초`;
+  if (Number(event.totalBytes) > 0) {
+    const partLabel = event.state === "saving"
+      ? "저장"
+      : event.downloadPart === "audio"
+        ? "음성"
+        : event.downloadPart === "video"
+          ? "영상"
+          : "다운로드";
+    sizeSummary.textContent = `${partLabel} ${formatBytes(event.downloadedBytes)} / ${formatBytes(event.totalBytes)}`;
+  }
+  speedSummary.textContent = event.state === "downloading" && event.speed
+    ? `${formatBytes(event.speed)}/초`
+    : "—";
   if (event.message) {
     const tone = event.state === "completed"
       ? "success"
