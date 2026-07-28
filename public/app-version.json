@@ -1,10 +1,10 @@
 {
-  "version": "0.2.6",
+  "version": "0.2.7",
   "downloadPage": "https://ourtube.kr/desktop",
-  "sha256": "771B371D7CD1F0134B8379589C2F1EBB6E186FFBB54996A11146A284B2EA54D0",
+  "sha256": "517BDA3C35EC57F26DAB4997DE6CD86AE54E3E3A21AA9253C029CF9B7EDD5456",
   "releaseNotes": [
-    "아워튜브 자체 소스를 GPL-3.0-or-later로 공개",
-    "설치본에 FFmpeg·Electron·런타임 패키지 라이선스 고지 포함",
-    "내 영상과 저장 허가를 받은 영상의 백업 용도를 명확히 안내"
+    "다운로드 진행률을 실시간으로 부드럽게 표시",
+    "영상·음성 다운로드와 MP4 결합 단계를 구분해 안내",
+    "대용량 파일을 최종 저장 위치로 복사하는 진행률 표시"
   ]
 }
