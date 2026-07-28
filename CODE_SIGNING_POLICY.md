@@ -4,7 +4,7 @@
 
 ## 현재 상태
 
-아워튜브 0.2.6 Windows 설치 파일은 아직 Authenticode 코드 서명이 적용되지
+아워튜브 0.2.7 Windows 설치 파일은 아직 Authenticode 코드 서명이 적용되지
 않았습니다. 공식 설치 파일은 <https://ourtube.kr/desktop>에서 연결하는
 `hwangseungbo/ourtube-releases` GitHub Releases를 통해서만 배포하며, 게시된
 SHA-256 값으로 무결성을 확인할 수 있습니다.

@@ -12,7 +12,7 @@
 - Project website: <https://ourtube.kr>
 - Download page: <https://ourtube.kr/desktop>
 - Latest public release:
-  <https://github.com/hwangseungbo/ourtube-releases/releases/tag/v0.2.6>
+  <https://github.com/hwangseungbo/ourtube-releases/releases/tag/v0.2.7>
 - License: GNU GPL v3 or later (`GPL-3.0-or-later`)
 - Code signing policy: <https://ourtube.kr/code-signing>
 - Privacy policy: <https://ourtube.kr/privacy>
@@ -46,7 +46,7 @@
 > archives, code-signing policy and GitHub Actions build history are public for
 > verification:
 > https://github.com/hwangseungbo/ourtube,
-> https://github.com/hwangseungbo/ourtube-releases/releases/tag/v0.2.6,
+> https://github.com/hwangseungbo/ourtube-releases/releases/tag/v0.2.7,
 > https://ourtube.kr/code-signing, and
 > https://github.com/hwangseungbo/ourtube/actions/runs/29993576452.
 
